@@ -103,14 +103,15 @@ namespace CrowdRecipe.Website.Controllers
         [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> Edit(string id, Recipe recipe)
         {
-            if(ModelState.IsValid)
+            
             {
                 recipe.Id = new ObjectId(id);
                 // could also set author id here
+                recipe.AuthorName = User.Identity.Name;
                 await recipesService.UpdateAsync(recipe.Id, recipe);
-                return RedirectToAction("Index");
+                return View("Details", await recipesService.GetAsync(new ObjectId(id)));
             }
-            return View();
+            return View(await recipesService.GetAsync(new ObjectId(id)));
         }
 
         [Authorize]
@@ -134,15 +135,73 @@ namespace CrowdRecipe.Website.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> MyRecipes(string username)
+        public async Task<IActionResult> MyRecipes()
         {
 
-            var recipes = await recipesService.GetByAuthorName(username);
+            var recipes = await recipesService.GetByAuthorName(User.Identity.Name);
             if(recipes.Count() > 0)
             {
                 return View(recipes);
             }
             return RedirectToAction("Index");
+
+        }
+
+        public async Task<IActionResult> Search()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Search(string title)
+        {
+            if(!string.IsNullOrEmpty(title))
+            {
+
+                var searchResults = await recipesService.GetByTitle(title);
+
+                return View("SearchResults", searchResults);
+
+            }
+
+            return View();
+        }
+
+        public async Task<IActionResult> Discover()
+        {
+
+            var allRecipes = await recipesService.GetAsync();
+
+            allRecipes.Sort((x, y) => y.Rating.CompareTo(x.Rating));
+            return View(allRecipes);
+
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Rate(string id, int ratingInput)
+        {
+
+            if (!string.IsNullOrEmpty(id) && ratingInput > 0)
+            {
+
+                var recipe = await recipesService.GetAsync(new ObjectId(id));
+                if(User.Identity.IsAuthenticated)
+                {
+                    if(recipe.Ratings.TryGetValue(User.Identity.Name, out float _))
+                    {
+                        recipe.Ratings[User.Identity.Name] = ratingInput;
+                    } else
+                    {
+                        recipe.Ratings.Add(User.Identity.Name, ratingInput);
+                    }
+                }
+                await recipesService.UpdateAsync(new ObjectId(id), recipe);
+                return View("Details", recipe);
+
+            }
+
+            return View("Details");
 
         }
 

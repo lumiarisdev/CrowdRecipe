@@ -1,15 +1,11 @@
 ﻿@model IEnumerable<CrowdRecipe.Website.Models.Recipe>
 
 @{
-    ViewData["Title"] = "My Recipes";
+    ViewData["Title"] = "SearchResults";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>My Recipes</h1>
-
-<p>
-    <a asp-action="Create" class="btn btn-primary">Create Recipe</a>
-</p>
+<h1>Search Results</h1>
 
 <div class="grid-container">
     @foreach(var item in Model)
@@ -24,10 +20,10 @@
                     @Html.DisplayNameFor(modelItem => item.Rating): @Html.DisplayFor(modelItem => item.Rating)
                 </div>
                 <div class="col-sm">
-                    @Html.DisplayNameFor(modelItem => item.PrepTimeMinutes): @Html.DisplayFor(modelItem => item.PrepTimeMinutes) mins
+                    @Html.DisplayNameFor(modelItem => item.PrepTimeMinutes): @Html.DisplayFor(modelItem => item.PrepTimeMinutes)
                 </div>
                 <div class="col-sm">
-                    @Html.DisplayNameFor(modelItem => item.CookTimeMinutes): @Html.DisplayFor(modelItem => item.CookTimeMinutes) mins
+                    @Html.DisplayNameFor(modelItem => item.CookTimeMinutes): @Html.DisplayFor(modelItem => item.CookTimeMinutes)
                 </div>
             </div>
             <div class="row-1 justify-content-md-center">

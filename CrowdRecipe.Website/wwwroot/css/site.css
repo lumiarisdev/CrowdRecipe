@@ -16,3 +16,18 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    grid-column-gap: 1em;
+    grid-row-gap: 1em;
+}
+
+.grid-item {
+    border: solid;
+    border-width: 2px;
+    border-color: black;
+    padding: 10px 10px 10px 10px;
+}

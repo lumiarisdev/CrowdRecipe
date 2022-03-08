@@ -39,6 +39,7 @@ namespace CrowdRecipe.Website.Services
 
         public async Task<List<Recipe>> GetByAuthorName(string name) => await recipeCollection.Find(x => x.AuthorName.Equals(name)).ToListAsync();
 
+        public async Task<List<Recipe>> GetByTitle(string title) => await recipeCollection.Find(x => x.Title.Equals(title)).ToListAsync();
 
     }
 }

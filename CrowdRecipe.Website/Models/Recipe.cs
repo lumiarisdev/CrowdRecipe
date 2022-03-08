@@ -31,9 +31,38 @@ namespace CrowdRecipe.Website.Models
         [BsonElement("instructions")]
         public string Instructions { get; set; }
 
+        [BsonIgnore]
+        [Display(Name = "Rating")]
+        public int RatingInput { get; set; }
+
+        [BsonIgnore]
+        public float Rating
+        {
+            get
+            {
+                if(Ratings.Count > 0)
+                {
+                    float rating = 0;
+                    foreach (float r in Ratings.Values)
+                    {
+                        rating += r;
+                    }
+                    rating /= Ratings.Count;
+                    return rating;
+                }
+                return 0;
+            }
+            private set { }
+        }
+
+        [BsonElement("ratings")]
+        public Dictionary<string, float> Ratings { get; set; }
+
+
+
         public Recipe()
         {
-            
+            Ratings = new Dictionary<string, float>();
         }
 
     }

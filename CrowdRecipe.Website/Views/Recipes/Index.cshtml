@@ -5,38 +5,35 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<head>
-    <style>
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(5, 1fr);
-            grid-column-gap: 1em;
-            grid-row-gap: 1em;
-        }
-        .grid-item {
-            border: solid;
-            border-width = 2px;
-            border-color: black;
-        }
-    </style>
-</head>
-
 <h1>All Recipes</h1>
 
-<p>
-    <a asp-action="Create" class="btn-primary">Create New</a>
-</p>
+@if(User.Identity.IsAuthenticated)
+{
+ <p>
+    <a asp-action="Create" class="btn btn-primary">Create Recipe</a>
+</p>   
+}
 
 <div class="grid-container">
     @foreach(var item in Model)
     {
         <div class="grid-item">
-            <h6>@Html.DisplayFor(modelItem => item.Title)</h6>
-            <h7>@Html.DisplayFor(modelItem => item.AuthorName)</h7>
-            <p>@Html.DisplayFor(modelItem => item.PrepTimeMinutes)</p>
-            <p>@Html.DisplayFor(modelItem => item.CookTimeMinutes)</p>
-            @Html.ActionLink("Details", "Details", new { @id=item.Id, @class="view-button" })
+            <div class="row">
+                <h6>@Html.DisplayFor(modelItem => item.Title)</h6>
+                <h7>@Html.DisplayNameFor(modelItem => item.AuthorName): @Html.DisplayFor(modelItem => item.AuthorName)</h7>
+            </div>
+            <div class="row-5 justify-content-md-center">
+                <div class="col sm">
+                    @Html.DisplayNameFor(modelItem => item.Rating): @Html.DisplayFor(modelItem => item.Rating)
+                </div>
+                <div class="col-sm">
+                    @Html.DisplayNameFor(modelItem => item.PrepTimeMinutes): @Html.DisplayFor(modelItem => item.PrepTimeMinutes) mins
+                </div>
+                <div class="col-sm">
+                    @Html.DisplayNameFor(modelItem => item.CookTimeMinutes): @Html.DisplayFor(modelItem => item.CookTimeMinutes) mins
+                </div>
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary" style="">View</a>
+            </div>
         </div>
     }
 </div>

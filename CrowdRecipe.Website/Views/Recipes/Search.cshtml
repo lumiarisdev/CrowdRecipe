@@ -1,0 +1,39 @@
+﻿@model CrowdRecipe.Website.Models.Recipe
+
+@{
+    ViewData["Title"] = "Search";
+}
+
+<h1>Search Recipe</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Search">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @*<div class="form-floating">
+                <input asp-for="AuthorName" class="form-control" />
+                <label asp-for="AuthorName" class="control-label"></label>
+            </div>
+
+            <br/>
+            <div>
+                <h7>OR</h7>
+            </div>
+            <br/>*@
+
+            <div class="form-floating">
+                <input asp-for="Title" class="form-control" />
+                <label asp-for="Title" class="control-label"></label>
+            </div>
+            <br/>
+            <br/>
+            <div class="form-floating">
+                <input type="submit" value="Search" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

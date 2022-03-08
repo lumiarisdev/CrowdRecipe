@@ -1,0 +1,11 @@
+﻿{
+  "author_id": { "$numberInt": "0" },
+  "author_name": "anotheruser@joe.com",
+  "title": "Burgers and Fries",
+  "prose": "This is the best burgres and fries recipe ever!",
+  "prep_time_minutes": { "$numberInt": "25" },
+  "cook_time_minutes": { "$numberInt": "15" },
+  "ingredients": "1lb ground beef\n1lb potatoes",
+  "instructions": "Grill the beef, put it on a bun, and fry those potatoes!",
+  "ratings": {}
+}

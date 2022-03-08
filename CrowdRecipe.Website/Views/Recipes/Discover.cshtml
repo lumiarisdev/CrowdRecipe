@@ -1,15 +1,11 @@
 ﻿@model IEnumerable<CrowdRecipe.Website.Models.Recipe>
 
 @{
-    ViewData["Title"] = "My Recipes";
+    ViewData["Title"] = "Discover";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>My Recipes</h1>
-
-<p>
-    <a asp-action="Create" class="btn btn-primary">Create Recipe</a>
-</p>
+<h1>Discover</h1>
 
 <div class="grid-container">
     @foreach(var item in Model)

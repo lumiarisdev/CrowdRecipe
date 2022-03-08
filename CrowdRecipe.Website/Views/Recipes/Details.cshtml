@@ -5,11 +5,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
-
-<div>
-    <h4>Recipe</h4>
-    <hr />
+<h1>@Html.DisplayFor(model => model.Title)</h1>
+<h4>@Html.DisplayNameFor(model => model.Rating): @Html.DisplayFor(model => model.Rating)</h4>
+<hr/>
+<div class="row">
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.AuthorName)
@@ -18,44 +17,46 @@
             @Html.DisplayFor(model => model.AuthorName)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Prose)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Prose)
-        </dd>
-        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.PrepTimeMinutes)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PrepTimeMinutes)
+            @Html.DisplayFor(model => model.PrepTimeMinutes) mins
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.CookTimeMinutes)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CookTimeMinutes)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Ingredients)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Ingredients)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Instructions)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Instructions)
+            @Html.DisplayFor(model => model.CookTimeMinutes) mins
         </dd>
     </dl>
 </div>
+<div class="row">
+    <p>@Html.DisplayTextFor(model => model.Prose)</p>
+</div>
+<div class="row">
+    <p>@Html.DisplayTextFor(model => model.Ingredients)</p>
+</div>
+<div class="row">
+    <p>@Html.DisplayTextFor(model => model.Instructions)</p>
+</div>
+
+
 <div>
-    @Html.ActionLink("Edit", "Edit", new { @id=Model.Id }) |
-    <a asp-action="Index">Back to List</a>
+    @if(User.Identity.IsAuthenticated)
+    {
+        <form asp-action="Rate">
+            <input type="range" min=0 max=10 value="@Model.RatingInput" name="ratingInput"/>
+            <input type="hidden" name="id" value="@Model.Id.ToString()" style=""/>
+            <input type="submit" class="btn btn-primary" value="Rate"/>
+        </form>
+
+        if(!string.IsNullOrEmpty(@Model.AuthorName))
+        {
+            if(User.Identity.Name.Equals(@Model.AuthorName))
+            {
+                <br/>
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>       
+            }
+        }
+    }
 </div>

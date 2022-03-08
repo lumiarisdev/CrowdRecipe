@@ -1,8 +1,52 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model CrowdRecipe.Website.Models.Recipe
+
+@{
+    ViewData["Title"] = "Home";
 }
 
+<head>
+    <link ref="stylesheet" type="text/css" href="background.css" />
+    <style>
+        .row {
+            margin: 5px 5px 5px 5px;
+        }
+    </style>
+</head>
+
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <div class="row">
+        <h1 class="display-4">CrowdRecipe</h1>
+    </div>
+    <div class="row">
+        <h3>A site for sharing, rating, and discovering personal recipes<br/>for any food under the sun.</h3>
+    </div>
+
+    <div class="row" style="margin:1em">
+        
+        <div class="row">
+            <form asp-controller="Recipes" asp-action="Discover">
+                <div class="form-group">
+                    <input type="submit" value="Discover" class="btn btn-primary"/>
+                </div>
+            </form>
+        </div>
+        
+        <div class="row">
+            <form asp-controller="Recipes" asp-action="Search">
+                <div class="form-group">
+                    <input type="submit" value="Search" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+
+        <div class="row">
+            <form asp-controller="Recipes" asp-action="Index">
+                <div class="form-group">
+                    <input type="submit" value="View All" class="btn btn-primary"/>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
 </div>
